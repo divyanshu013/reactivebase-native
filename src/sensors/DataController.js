@@ -1,10 +1,24 @@
-import React, { Component } from "react";
+// @flow
+
+import React, { Component, type Node } from "react";
 import { connect } from "react-redux";
 import { View } from "react-native";
 
 import { addComponent, removeComponent, updateQuery } from "../actions";
 
-class DataController extends Component {
+type Props = {
+	componentId: string,
+	addComponent: (componentId: string) => void,
+	removeComponent: (componentId: string) => void,
+	updateQuery: (componentId: string, query: {}, onQueryChange?: (prev: {}, next: {}) => any) => void,
+	beforeValueChange?: (defaultSelected: string | null) => Promise<any>,
+	customQuery?: (defaultSelected: string | null) => {},
+	children?: Node,
+	defaultSelected?: string | null,
+	onValueChange?: (defaultSelected: string | null) => void
+};
+
+class DataController extends Component<void, Props, void> {
 	componentDidMount() {
 		this.props.addComponent(this.props.componentId);
 
